@@ -1,4 +1,3 @@
-<?php
 function post_meta_who($post, $class)
 		{
 			if (isset($post['who']))
