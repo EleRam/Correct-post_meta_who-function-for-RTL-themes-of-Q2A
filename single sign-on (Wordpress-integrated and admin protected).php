@@ -1,17 +1,16 @@
 function post_meta_who($post, $class)
 {
 	if (isset($post['who']))
-	{
-		// Default Wordpress 'Administrator's username is 'Admin'. Change it in below line if you have choosed another name.
-		$admin_userlogin = 'Admin';
-		
+	{				
 		$this->output('<span class="' . $class . '-who">');
-		$user = get_user_by( 'login', $post['who']['data'] == 'Admin' ? $post['who']['data'] : $admin_userlogin );
+		$user = get_user_by( 'login', $post['who']['data'] );
+		// Replace administrators "user-login" with "display_name" and remove their profile's link to prevent hackers to identification of admins usernames
+		$user_display_name = ( $user->roles['0'] == 'administrator' || $user->roles['0'] == 'contributor' || $user->roles['0'] == 'editor' ) ? $user->data->display_name : $post['who']['data'];
 		
 		if (strlen(@$post['who']['prefix'])) $this->output('<span class="' . $class . '-who-pad">' . $post['who']['prefix'] . '</span>');
 		if (isset($post['who']['data']))
 		{
-			$this->output('<span class="' . $class . '-who-data">' . $post['who']['data']. '</span>');
+			$this->output('<span class="' . $class . '-who-data">' . $user_display_name. '</span>');
 		}
 		if (isset($post['who']['title'])) $this->output('<span class="' . $class . '-who-title">' . $post['who']['title'] . '</span>');
 		if ($user->roles[0] == 'administrator')
