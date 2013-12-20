@@ -5,7 +5,7 @@ function post_meta_who($post, $class)
 		$this->output('<span class="' . $class . '-who">');
 		$user = get_user_by( 'login', $post['who']['data'] );
 		// Replace administrators "user-login" with "display_name" and remove their profile's link to prevent hackers to identification of admins usernames
-		$user_display_name = ( $user->roles['0'] == 'administrator' || $user->roles['0'] == 'contributor' || $user->roles['0'] == 'editor' ) ? $user->data->display_name : $post['who']['data'];
+		$user_display_name = ( $user->roles['0'] == 'administrator' || $user->roles['0'] == 'contributor' || $user->roles['0'] == 'editor' ) ? '<b>'. $user->data->display_name. '</b>' : $post['who']['data'];
 		
 		if (strlen(@$post['who']['prefix'])) $this->output('<span class="' . $class . '-who-pad">' . $post['who']['prefix'] . '</span>');
 		if (isset($post['who']['data']))
